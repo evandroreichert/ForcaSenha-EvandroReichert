@@ -60,7 +60,115 @@
 
     <script>
 
-       
+        let inputSenha = document.querySelector('#iPass')
+        let forcaSenha = 0
+        let btn = document.querySelector('#btn')
+        let saida = document.querySelector('#strength')
+        let barraProgresso = document.querySelector('.barraProgresso')
+
+        let least12 = document.querySelector('.least12')
+        let lower = document.querySelector('.lower')
+        let upper = document.querySelector('.upper')
+        let symbol = document.querySelector('.symbol')
+        let numbers = document.querySelector('.numbers')
+        let icons = document.querySelectorAll('.bx')
+
+        inputSenha.focus()
+
+        inputSenha.addEventListener('keyup', function handleForca() {
+            let senha = document.querySelector('#iPass').value
+
+            // Checa tamanho da senha
+            if (senha.length >= 1 && senha.length < 6) {
+                forcaSenha = 1
+            } else if (senha.length >= 6 && senha.length < 10) {
+                forcaSenha = 2
+            } else if (senha.length >= 10 && senha.length < 12) {
+                forcaSenha = 3
+            } else if (senha.length >= 12 && senha.length < 14) {
+                forcaSenha = 4
+            } else if (senha.length >= 14) {
+                forcaSenha = 5
+            }
+
+            // Regex testando composição da senha
+            if (senha.length >= 12) {
+
+                least12.style.color = '#8E2DE2'
+                document.querySelector('#least12Icon').className = 'bx bx-happy'
+            } else {
+                least12.style.color = 'gray'
+                document.querySelector('#least12Icon').className = 'bx bx-meh'
+            }
+            if (/[A-Z]/.test(senha)) {
+                forcaSenha += 1
+                upper.style.color = '#8E2DE2'
+                document.querySelector('#upperIcon').className = 'bx bx-happy'
+            } else {
+                upper.style.color = 'gray'
+                document.querySelector('#upperIcon').className = 'bx bx-meh'
+            }
+            if (/[a-z]/.test(senha)) {
+                forcaSenha += 1
+                lower.style.color = '#8E2DE2'
+                document.querySelector('#lowerIcon').className = 'bx bx-happy'
+            } else {
+                lower.style.color = 'gray'
+                document.querySelector('#lowerIcon').className = 'bx bx-meh'
+            }
+            if (/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(senha)) {
+                forcaSenha += 2
+                symbol.style.color = '#8E2DE2'
+                document.querySelector('#symbolIcon').className = 'bx bx-happy'
+            } else {
+                symbol.style.color = 'gray'
+                document.querySelector('#symbolIcon').className = 'bx bx-meh'
+            }
+            if (/\d/.test(senha)) {
+                forcaSenha += 1
+                numbers.style.color = '#8E2DE2'
+                document.querySelector('#numbersIcon').className = 'bx bx-happy'
+            } else {
+                numbers.style.color = 'gray'
+                document.querySelector('#numbersIcon').className = 'bx bx-meh'
+            }
+
+            // Dando saída de acordo com a força da senha
+            if (forcaSenha <= 5) {
+                saida.innerHTML = 'Senha Fraca'
+                saida.style.color = '#e90f10'
+                barraProgresso.classList.remove('barraProgresso-moderada')
+                barraProgresso.classList.remove('barraProgresso-forte')
+                barraProgresso.classList.add('barraProgresso-fraca')
+                barraProgresso.style.width = '30px'
+            }
+            if (forcaSenha > 5 && forcaSenha < 9) {
+                saida.innerHTML = 'Senha Moderada'
+                saida.style.color = '#ffad00'
+                barraProgresso.classList.remove('barraProgresso-fraca')
+                barraProgresso.classList.remove('barraProgresso-forte')
+                barraProgresso.classList.add('barraProgresso-moderada')
+                barraProgresso.style.width = '180px'
+            }
+            if (forcaSenha >= 9) {
+                saida.innerHTML = 'Senha Forte'
+                saida.style.color = '#02b502'
+                barraProgresso.classList.remove('barraProgresso-fraca')
+                barraProgresso.classList.remove('barraProgresso-moderada')
+                barraProgresso.classList.add('barraProgresso-forte')
+                barraProgresso.style.width = '300px'
+            }
+        })
+
+        btn.addEventListener('click', function showPass() {
+            if (inputSenha.type === 'password') {
+                inputSenha.type = 'text'
+                btn.innerHTML = 'Esconder'
+            } else {
+                inputSenha.type = 'password'
+                btn.innerHTML = 'Mostrar'
+            }
+        })
 
     </script>
 </body>
