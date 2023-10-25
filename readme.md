@@ -1,3 +1,3 @@
 Verificador de Força de Senha
 
-![PC Preview](preview.gif)
+![PC Preview](short-preview.gif)
